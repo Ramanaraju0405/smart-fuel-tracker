@@ -37,7 +37,6 @@ function App() {
   const [theme, setTheme] = useState('dark');
   const [notification, setNotification] = useState(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   // Load persisted state
   useEffect(() => {
@@ -125,7 +124,7 @@ function App() {
   };
 
   const isSessionActive = session && !session.endTime;
-  const isSessionEnded = session && session.endTime;
+ 
 
   const renderView = () => {
     switch (view) {
@@ -202,7 +201,7 @@ function App() {
             <button
               key={item.id}
               className={`nav-item ${view === item.id ? 'active' : ''}`}
-              onClick={() => { setView(item.id); setMenuOpen(false); }}
+              onClick={() => setView(item.id)}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-label">{item.label}</span>
