@@ -2,6 +2,8 @@ const KEYS = {
   ACTIVE_SESSION: 'sfst_active_session',
   SESSION_HISTORY: 'sfst_session_history',
   THEME: 'sfst_theme',
+  USERS: 'sfst_users',
+  CURRENT_USER: 'sfst_current_user',
 };
 
 export const storage = {
@@ -37,4 +39,22 @@ export const storage = {
   },
   getTheme: () => localStorage.getItem(KEYS.THEME) || 'dark',
   setTheme: (theme) => localStorage.setItem(KEYS.THEME, theme),
+
+  // Auth
+  getUsers: () => {
+    try { return JSON.parse(localStorage.getItem(KEYS.USERS) || '[]'); }
+    catch { return []; }
+  },
+  saveUser: (user) => {
+    const users = storage.getUsers();
+    users.push(user);
+    localStorage.setItem(KEYS.USERS, JSON.stringify(users));
+  },
+  findUser: (username) => storage.getUsers().find(u => u.username.toLowerCase() === username.toLowerCase()),
+  getCurrentUser: () => {
+    try { return JSON.parse(localStorage.getItem(KEYS.CURRENT_USER) || 'null'); }
+    catch { return null; }
+  },
+  setCurrentUser: (user) => localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(user)),
+  clearCurrentUser: () => localStorage.removeItem(KEYS.CURRENT_USER),
 };
